@@ -1,5 +1,5 @@
-import {View, Text, ScrollView} from 'react-native'
 import {RaidOptimizerEngine} from '@tt2-build-wizard/logic'
+import {View, Text, ScrollView} from 'react-native'
 import {useAppStore} from '../store/useAppStore'
 import {Card, Badge} from '../components/ui'
 import React, {useMemo} from 'react'
