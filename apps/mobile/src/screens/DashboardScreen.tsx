@@ -1,11 +1,5 @@
-import {
-	View,
-	Text,
-	ScrollView,
-	TouchableOpacity,
-	Alert,
-	Clipboard,
-} from 'react-native'
+import {View, Text, ScrollView, TouchableOpacity, Alert} from 'react-native'
+import Clipboard from '@react-native-clipboard/clipboard'
 import {useAppStore} from '../store/useAppStore'
 import {Card, Button} from '../components/ui'
 import React, {useState} from 'react'

@@ -1,28 +1,33 @@
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context'
 import {View, StatusBar, Text, TouchableOpacity, Image} from 'react-native'
 import {OptimizerScreen} from './src/screens/OptimizerScreen'
+import {EquipmentScreen} from './src/screens/EquipmentScreen'
 import {DashboardScreen} from './src/screens/DashboardScreen'
 import {ArtifactsScreen} from './src/screens/ArtifactsScreen'
 import {GuidesScreen} from './src/screens/GuidesScreen'
 import {RaidScreen} from './src/screens/RaidScreen'
+import {useColorScheme} from 'nativewind'
 import React, {useState} from 'react'
 import './global.css'
 
 export default function App() {
+	const {colorScheme, toggleColorScheme} = useColorScheme()
 	const [activeTab, setActiveTab] = useState<
-		'dashboard' | 'artifacts' | 'raid' | 'optimizer' | 'guides'
+		'dashboard' | 'artifacts' | 'raid' | 'optimizer' | 'equipment' | 'guides'
 	>('dashboard')
 
 	return (
 		<SafeAreaProvider>
 			<SafeAreaView
-				className="flex-1 bg-slate-950"
-				style={{flex: 1, backgroundColor: '#020617'}}
+				className="flex-1 bg-slate-950 dark:bg-slate-950 light:bg-slate-50"
+				style={{flex: 1}}
 			>
-				<StatusBar barStyle="light-content" />
+				<StatusBar
+					barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
+				/>
 
 				{/* App Header */}
-				<View className="px-6 py-4 flex-row justify-between items-center bg-slate-950/80 border-b border-slate-900">
+				<View className="px-6 py-4 flex-row justify-between items-center bg-slate-950/80 dark:bg-slate-950/80 light:bg-slate-100/80 border-b border-slate-900 dark:border-slate-900 light:border-slate-200">
 					<View className="flex-row items-center">
 						<View className="w-10 h-10 bg-indigo-600 rounded-xl items-center justify-center shadow-lg shadow-indigo-500/40 overflow-hidden">
 							<Image
@@ -32,16 +37,21 @@ export default function App() {
 							/>
 						</View>
 						<View className="ml-3">
-							<Text className="text-white font-black text-xl tracking-tighter leading-tight">
+							<Text className="text-white dark:text-white light:text-slate-900 font-black text-xl tracking-tighter leading-tight">
 								TT2 Build Wizard
 							</Text>
-							<Text className="text-slate-500 text-xs tracking-tight">
+							<Text className="text-slate-500 dark:text-slate-500 light:text-slate-400 text-xs tracking-tight">
 								Your companion for mastering Tap Titans 2
 							</Text>
 						</View>
 					</View>
-					<TouchableOpacity className="bg-slate-900 p-3 rounded-2xl border border-slate-800">
-						<Text className="text-slate-400 font-bold">⚙️</Text>
+					<TouchableOpacity
+						onPress={toggleColorScheme}
+						className="bg-slate-900 dark:bg-slate-900 light:bg-slate-200 p-3 rounded-2xl border border-slate-800 dark:border-slate-800 light:border-slate-300"
+					>
+						<Text className="text-slate-400 dark:text-slate-400 light:text-slate-600 font-bold">
+							{colorScheme === 'dark' ? '🌙' : '☀️'}
+						</Text>
 					</TouchableOpacity>
 				</View>
 
@@ -51,77 +61,56 @@ export default function App() {
 					{activeTab === 'artifacts' && <ArtifactsScreen />}
 					{activeTab === 'raid' && <RaidScreen />}
 					{activeTab === 'optimizer' && <OptimizerScreen />}
+					{activeTab === 'equipment' && <EquipmentScreen />}
 					{activeTab === 'guides' && <GuidesScreen />}
 				</View>
 
 				{/* Bottom Navigation Bar */}
 				<View
-					className="absolute bottom-0 left-0 right-0 bg-slate-950/95 border-t border-slate-900 px-6 pb-10 pt-4"
-					style={{
-						zIndex: 1000,
-						position: activeTab === 'guides' ? 'relative' : 'relative',
-						marginBottom: activeTab === 'guides' ? -10 : -10,
-					}}
+					className="absolute bottom-0 left-0 right-0 bg-slate-950/95 dark:bg-slate-950/95 light:bg-slate-100/95 border-t border-slate-900 dark:border-slate-900 light:border-slate-200 px-2 pb-10 pt-4"
+					style={{zIndex: 1000}}
 				>
-					<View className="bg-slate-900/80 border border-slate-800 p-1.5 rounded-3xl flex-row items-center shadow-2xl">
+					<View className="bg-slate-900/80 dark:bg-slate-900/80 light:bg-slate-200/80 border border-slate-800 dark:border-slate-800 light:border-slate-300 p-1.5 rounded-3xl flex-row items-center shadow-2xl">
 						<TouchableOpacity
 							onPress={() => setActiveTab('dashboard')}
-							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'dashboard' ? 'bg-slate-800' : ''}`}
+							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'dashboard' ? (colorScheme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
 						>
-							<Text className="mr-2">🏠</Text>
-							<Text
-								className={`font-bold text-[10px] ${activeTab === 'dashboard' ? 'text-white' : 'text-slate-500'}`}
-							>
-								Home
-							</Text>
+							<Text className="text-xs">🏠</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity
 							onPress={() => setActiveTab('artifacts')}
-							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'artifacts' ? 'bg-slate-800' : ''}`}
+							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'artifacts' ? (colorScheme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
 						>
-							<Text className="mr-2">🏺</Text>
-							<Text
-								className={`font-bold text-[10px] ${activeTab === 'artifacts' ? 'text-white' : 'text-slate-500'}`}
-							>
-								Arts
-							</Text>
+							<Text className="text-xs">🏺</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity
 							onPress={() => setActiveTab('raid')}
-							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'raid' ? 'bg-slate-800' : ''}`}
+							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'raid' ? (colorScheme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
 						>
-							<Text className="mr-2">⚔️</Text>
-							<Text
-								className={`font-bold text-[10px] ${activeTab === 'raid' ? 'text-white' : 'text-slate-500'}`}
-							>
-								Raid
-							</Text>
+							<Text className="text-xs">⚔️</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity
 							onPress={() => setActiveTab('optimizer')}
-							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'optimizer' ? 'bg-slate-800' : ''}`}
+							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'optimizer' ? (colorScheme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
 						>
-							<Text className="mr-2">⚡</Text>
-							<Text
-								className={`font-bold text-[10px] ${activeTab === 'optimizer' ? 'text-white' : 'text-slate-500'}`}
-							>
-								SP
-							</Text>
+							<Text className="text-xs">⚡</Text>
+						</TouchableOpacity>
+
+						<TouchableOpacity
+							onPress={() => setActiveTab('equipment')}
+							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'equipment' ? (colorScheme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
+						>
+							<Text className="text-xs">🛡️</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity
 							onPress={() => setActiveTab('guides')}
-							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'guides' ? 'bg-slate-800' : ''}`}
+							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'guides' ? (colorScheme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
 						>
-							<Text className="mr-2">📚</Text>
-							<Text
-								className={`font-bold text-[10px] ${activeTab === 'guides' ? 'text-white' : 'text-slate-500'}`}
-							>
-								Guides
-							</Text>
+							<Text className="text-xs">📚</Text>
 						</TouchableOpacity>
 					</View>
 				</View>

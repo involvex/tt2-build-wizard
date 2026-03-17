@@ -7,6 +7,8 @@ export interface TT2SaveData {
   currentStage: number;
   relics: number;
   lifetimeRelics: number;
+  craftingShards: number;
+  ownedEquipmentSets: string[];
   raidStats: {
     cardLevels: Record<string, number>;
     playerLevel: number;
@@ -31,6 +33,8 @@ export class SaveFileParser {
         currentStage: 0,
         relics: 0,
         lifetimeRelics: 0,
+        craftingShards: 0,
+        ownedEquipmentSets: [],
         raidStats: {
           cardLevels: {},
           playerLevel: 0,
@@ -64,6 +68,12 @@ export class SaveFileParser {
         result.maxStage = data.PlayerModel.maxStage || 0;
         result.relics = data.PlayerModel.relics || 0;
         result.lifetimeRelics = data.PlayerModel.lifetimeRelics || 0;
+        result.craftingShards = data.PlayerModel.craftingShards || 0;
+      }
+
+      // Extract Equipment Sets
+      if (data.EquipmentSetModel) {
+        result.ownedEquipmentSets = data.EquipmentSetModel.completedSets || [];
       }
 
       // Extract Raid Stats
