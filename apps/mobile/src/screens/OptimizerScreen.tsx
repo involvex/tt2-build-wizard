@@ -3,7 +3,7 @@ import {
 	BuildType,
 	GoldSource,
 	SkillLevel,
-} from '@magicappdev/logic'
+} from '@tt2-build-wizard/logic'
 import {Text, View, ScrollView, TouchableOpacity} from 'react-native'
 import {Card, Button, Badge, Input} from '../components/ui'
 import {useAppStore} from '../store/useAppStore'
@@ -12,13 +12,18 @@ import React, {useState, useMemo} from 'react'
 const engine = new OptimizerEngine()
 
 export const OptimizerScreen = () => {
-	const {build, gold, sp, setBuild, setGold, setSP} = useAppStore()
+	const {build, gold, sp, setBuild, setGold, setSP, playerData} = useAppStore()
 	const [results, setResults] = useState<SkillLevel[]>([])
 
-	const spValue = parseInt(sp) || 0
+	const spValue = playerData ? playerData.totalSP : parseInt(sp) || 0
 
 	const calculate = () => {
-		const optimized = engine.optimize(spValue, build, gold)
+		const optimized = engine.optimize(
+			spValue,
+			build,
+			gold,
+			playerData?.skillLevels || {},
+		)
 		setResults(optimized)
 	}
 
@@ -37,7 +42,7 @@ export const OptimizerScreen = () => {
 	return (
 		<ScrollView
 			className="flex-1 px-5"
-			contentContainerStyle={{paddingTop: 20, paddingBottom: 100}}
+			contentContainerStyle={{paddingTop: 20, paddingBottom: 120}}
 			showsVerticalScrollIndicator={false}
 		>
 			{/* Configuration Card */}
@@ -98,21 +103,33 @@ export const OptimizerScreen = () => {
 					))}
 				</View>
 
-				<Input
-					label="Available Skill Points"
-					placeholder="e.g. 500"
-					keyboardType="numeric"
-					value={sp}
-					onChangeText={setSP}
-				/>
+				{playerData ? (
+					<View className="mb-4">
+						<Text className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-2 ml-1">
+							Available Skill Points
+						</Text>
+						<View className="bg-slate-800/50 border border-slate-700/50 rounded-2xl px-4 py-3.5 flex-row items-center justify-between">
+							<Text className="text-white font-bold text-base">
+								From Save File
+							</Text>
+							<Badge active>{playerData.totalSP.toString()}</Badge>
+						</View>
+					</View>
+				) : (
+					<Input
+						label="Available Skill Points"
+						placeholder="e.g. 500"
+						keyboardType="numeric"
+						value={sp}
+						onChangeText={setSP}
+					/>
+				)}
 			</Card>
 
 			{/* Action Buttons */}
 			<View className="flex-row gap-3 mb-10">
 				<Button onPress={calculate} className="flex-1 h-16">
-					<Text className="text-white font-black text-base ml-3 tracking-tight">
-						Run Optimization
-					</Text>
+					Run Optimization
 				</Button>
 				<TouchableOpacity
 					onPress={reset}

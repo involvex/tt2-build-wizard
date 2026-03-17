@@ -59,7 +59,7 @@ export const GuidesScreen = () => {
 	return (
 		<ScrollView
 			className="flex-1 px-5"
-			contentContainerStyle={{paddingTop: 20, paddingBottom: 100}}
+			contentContainerStyle={{paddingTop: 20, paddingBottom: 120}}
 			showsVerticalScrollIndicator={false}
 		>
 			<View className="mb-8">

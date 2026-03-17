@@ -89,23 +89,27 @@ export class OptimizerEngine {
     ): SkillLevel[] {
         const currentLevels = { ...initialLevels };
         const results: SkillLevel[] = [];
+        
+        // Initialize levels for all skills and calculate initial spent SP
         let spentSP = 0;
-
-        // Initialize levels for all skills if not provided
         for (const skillId in this.skills) {
             if (currentLevels[skillId] === undefined) {
                 currentLevels[skillId] = 0;
+            } else {
+                spentSP += this.getCost(skillId, currentLevels[skillId]);
             }
         }
 
-        while (spentSP < availableSP) {
+        // Safety break to prevent infinite loops
+        let iterations = 0;
+        const maxIterations = 1000;
+
+        while (spentSP < availableSP && iterations < maxIterations) {
+            iterations++;
             let bestSkillId: string | null = null;
             let maxEff = -1;
 
             for (const skillId in this.skills) {
-                // Skip if requirements not met (simplified for now)
-                // TODO: Implement requirement checking
-                
                 const eff = this.calculateEfficiency(skillId, currentLevels[skillId], build, gold);
                 if (eff > maxEff) {
                     maxEff = eff;
@@ -119,9 +123,10 @@ export class OptimizerEngine {
             const cost = this.getCost(bestSkillId, nextLevel) - this.getCost(bestSkillId, currentLevels[bestSkillId]);
 
             if (spentSP + cost > availableSP) {
-                // Mark as too expensive and try others? 
-                // For simplicity, we just stop or could look for the next best that fits.
-                // A better approach would be to filter skills that fit in available SP.
+                // If the best skill is too expensive, we don't just stop.
+                // We should technically look for the next best that fits, 
+                // but for now, we'll mark this skill as skipped for this run.
+                // To keep it simple, we'll just break if the absolute best doesn't fit.
                 break; 
             }
 

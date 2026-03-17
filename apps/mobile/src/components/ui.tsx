@@ -51,7 +51,13 @@ export const Button = ({
 			disabled={disabled}
 			className={`${variants[variant]} px-6 py-4 rounded-2xl flex-row items-center justify-center shadow-lg ${disabled ? 'opacity-50' : ''} ${className}`}
 		>
-			{children}
+			{typeof children === 'string' ? (
+				<Text className="text-white font-black uppercase tracking-widest text-center">
+					{children}
+				</Text>
+			) : (
+				children
+			)}
 		</TouchableOpacity>
 	)
 }

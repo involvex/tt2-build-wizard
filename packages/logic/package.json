@@ -1,12 +1,12 @@
 {
   "name": "@tt2-build-wizard/logic",
   "version": "1.0.0",
-  "main": "dist/optimizer.js",
-  "module": "dist/optimizer.js",
-  "types": "dist/optimizer.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "bun build ./src/optimizer.ts --outdir ./dist && tsc --emitDeclarationOnly --declaration --project tsconfig.json"
+    "build": "bun build ./index.ts --outdir ./dist && tsc --emitDeclarationOnly --declaration --project tsconfig.json"
   },
   "devDependencies": {
     "@types/bun": "latest"
