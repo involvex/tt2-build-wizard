@@ -1,25 +1,38 @@
 {
-  "name": "tt2-build-wizard-monorepo",
-  "version": "1.0.0",
-  "private": true,
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
-  "scripts": {
-    "test": "bun test"
-  },
-  "devDependencies": {
-    "typescript": "^5.0.0",
-    "@types/bun": "latest",
-    "prettier-plugin-sort-json": "^4.2.0",
-    "@involvex/prettier-config": "^0.0.4",
-    "prettier-plugin-java": "^2.8.1",
-    "prettier-plugin-markdown-html": "^1.4.0",
-    "prettier": "^3.8.1",
-    "prettier-plugin-organize-imports": "^4.3.0",
-    "prettier-plugin-packagejson": "^3.0.2",
-    "prettier-plugin-sort-imports": "^1.8.11"
-  },
-  "prettier": "@involvex/prettier-config"
+	"name": "tt2-build-wizard-monorepo",
+	"version": "1.0.0",
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/involvex/tt2-build-wizard.git"
+	},
+	"funding": {
+		"url": "https://github.com/sponsors/involvex"
+	},
+	"author": {
+		"name": "involvex"
+	},
+	"workspaces": [
+		"packages/*",
+		"apps/*"
+	],
+	"scripts": {
+		"test": "bun test"
+	},
+	"prettier": "@involvex/prettier-config",
+	"devDependencies": {
+		"@involvex/prettier-config": "^0.0.4",
+		"@types/bun": "latest",
+		"prettier": "^3.8.1",
+		"prettier-plugin-java": "^2.8.1",
+		"prettier-plugin-markdown-html": "^1.4.0",
+		"prettier-plugin-organize-imports": "^4.3.0",
+		"prettier-plugin-packagejson": "^3.0.2",
+		"prettier-plugin-sort-imports": "^1.8.11",
+		"prettier-plugin-sort-json": "^4.2.0",
+		"typescript": "^5.0.0"
+	},
+	"sponsor": {
+		"url": "https://github.com/sponsors/involvex"
+	}
 }

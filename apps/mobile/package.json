@@ -2,6 +2,16 @@
 	"name": "@tt2-build-wizard/mobile",
 	"version": "1.0.0",
 	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/involvex/tt2-build-wizard.git"
+	},
+	"funding": {
+		"url": "https://github.com/sponsors/involvex"
+	},
+	"author": {
+		"name": "involvex"
+	},
 	"type": "commonjs",
 	"main": "index.ts",
 	"scripts": {
@@ -45,5 +55,8 @@
 		"eslint-plugin-import": "^2.32.0",
 		"eslint-plugin-react": "^7.37.5",
 		"typescript": "^5.3.3"
+	},
+	"sponsor": {
+		"url": "https://github.com/sponsors/involvex"
 	}
 }
