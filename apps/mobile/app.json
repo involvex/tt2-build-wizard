@@ -6,6 +6,9 @@
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
 		"userInterfaceStyle": "light",
+		"scheme": "tt2buildwizard",
+		"owner": "involvex",
+		"description": "TT2 Build Optimiser",
 		"splash": {
 			"image": "./assets/splash-icon.png",
 			"resizeMode": "contain",
@@ -22,11 +25,13 @@
 				"monochromeImage": "./assets/android-icon-monochrome.png"
 			},
 			"predictiveBackGestureEnabled": false,
-			"versionCode": 0
+			"versionCode": 0,
+			"package": "com.involvex.tt2buildwizard"
 		},
 		"web": {
 			"favicon": "./assets/favicon.png",
-			"bundler": "metro"
+			"bundler": "metro",
+			"name": "TT2 Build Wizard"
 		}
 	}
 }
