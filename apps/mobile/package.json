@@ -6,7 +6,7 @@
 	"main": "index.ts",
 	"scripts": {
 		"android": "expo start --android",
-		"check": "bun run format && bun run lint:fix && bun run typecheck && bunx expo install --check && bunx expo doctor --verbose",
+		"check": "bun run format && bun run lint:fix && bun run typecheck && bunx expo install --check && bunx expo-doctor --verbose",
 		"format": "prettier --write .",
 		"ios": "expo start --ios",
 		"lint": "eslint .",
