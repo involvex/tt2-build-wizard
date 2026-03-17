@@ -1,0 +1,22 @@
+{
+	"name": "TapTitans2 Data Collection and Tools",
+	"version": "0.0.1",
+	"author": {
+		"name": "involvex"
+	},
+	"scripts": {
+		"format": "prettier --write ."
+	},
+	"prettier": "@involvex/prettier-config",
+	"dependencies": {
+		"@types/bun": "latest",
+		"bun": "latest"
+	},
+	"devDependencies": {
+		"@involvex/prettier-config": "latest",
+		"prettier": "^3.8.1",
+		"prettier-plugin-java": "^2.8.1",
+		"prettier-plugin-markdown-html": "^1.4.0",
+		"prettier-plugin-sort-json": "latest"
+	}
+}

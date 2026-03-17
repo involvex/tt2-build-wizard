@@ -1,0 +1,7 @@
+{
+	"plugins": [
+		"prettier-plugin-sort-json",
+		"prettier-plugin-java",
+		"prettier-plugin-markdown-html"
+	]
+}
