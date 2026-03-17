@@ -1,0 +1,172 @@
+INSTRUCTIONS,,
+,,
+Other languages:,,
+"French, by Chapinel:",,https://docs.google.com/spreadsheets/d/1W3xTov7cj4EbRG-Tbz8gJoDWthemJ2jD-ULjEd0sJbA/edit?usp=sharing 
+"Spanish, by Soru and Bandar:",,https://docs.google.com/spreadsheets/d/1TA6UvT1RdTiT25vScf74pz63KUaqPf4npx2f_J-uVkg/edit?usp=sharing
+"German, by IAN and MaxTheDeath:",,https://docs.google.com/spreadsheets/d/1lQy6mihuD4pBFTuxj7nFd74qHlRZUVp58HXHt63BAtM/edit?usp=sharing
+"Korean, by PbnK:",,https://docs.google.com/spreadsheets/d/19LUaQwkqBdXmnZbD4fOcOu0ospvGH2zZbNBx76z4TSQ/edit?usp=sharing
+"Arabic, by Abdo:",,https://docs.google.com/spreadsheets/d/1zL9cPxaqk9r5KtUhL4kFXGAFAXUaJvGBYbhDJ6vBGFI/edit?usp=sharing
+"Russian, by Stasipan:",,https://docs.google.com/spreadsheets/d/1_F4Pe6kwkpLDvsmcmYTiFCY2BFm8ApW2zfMR8y1P4Qs/edit#gid=173072061
+More languages hopefully coming soon!,,
+See my Discord below if you want to help translate!,,
+,,
+Contents (tabs):,,
+"For normal use:
+- Instructions
+- Skill Point optimiser
+- Screenshot
+- Tools
+- Troubleshooting and hints
+- Changelog
+For deeper understanding:
+- Builds
+- Maths",,
+,,
+Table of contents:,,
+- Sheets support server,,https://docs.google.com/spreadsheets/d/1RUuUlFeqLEmEL0MR9irjuDtm0iiNcUcdHjiGC7m8Nh0/edit#gid=173072061&range=A25
+- How to use the optimiser,,https://docs.google.com/spreadsheets/d/1RUuUlFeqLEmEL0MR9irjuDtm0iiNcUcdHjiGC7m8Nh0/edit#gid=173072061&range=A29
+- Important note!,,https://docs.google.com/spreadsheets/d/1RUuUlFeqLEmEL0MR9irjuDtm0iiNcUcdHjiGC7m8Nh0/edit#gid=173072061&range=A36
+- Explanation of warnings,,https://docs.google.com/spreadsheets/d/1RUuUlFeqLEmEL0MR9irjuDtm0iiNcUcdHjiGC7m8Nh0/edit#gid=173072061&range=A39
+- Explanation of settings/data entering,,https://docs.google.com/spreadsheets/d/1RUuUlFeqLEmEL0MR9irjuDtm0iiNcUcdHjiGC7m8Nh0/edit#gid=173072061&range=A43
+- Extra explanations,,https://docs.google.com/spreadsheets/d/1RUuUlFeqLEmEL0MR9irjuDtm0iiNcUcdHjiGC7m8Nh0/edit#gid=173072061&range=A89
+- How to save & restore builds,,https://docs.google.com/spreadsheets/d/1RUuUlFeqLEmEL0MR9irjuDtm0iiNcUcdHjiGC7m8Nh0/edit#gid=173072061&range=A94
+,,
+Sheets support server:,,
+https://discord.gg/Yebzxf2,,
+"See here for bug reports, suggestions, questions and polls.",,
+,,
+How to use the optimiser:,,
+"Step 1: make a copy.
+
+- Mobile: use the Google Sheets app. Make a copy via Options (or ...) -> Share/export -> Make a copy. 
+- PC: use the Google Sheets website. Make a copy via File -> Make a copy.
+
+DO NOT save the sheet in Excel - please keep it online, as a Google Sheet. This is because the scripts are written in Google Sheets' programming language, which is similar to JavaScript, whereas Excel has its own language, which is imilar to Visual Basic.",,
+"Step 2: set preferences and input stats.
+
+To properly calculate efficiency, the optimiser needs to know some chances, and it needs to know which skills to ignore. You can set all that in Stats input tab. Further explanations on this are below.",,
+"Step 3: reset all skills.
+
+Use the button 'Clear tree' in the Knight tree (Skill Point optimiser tab) for this (this should work on mobile as well). This resets most skills to 0, but some of the tier 1 skills (topmost skill in a branch) to level 2. This is to unlock the rest of the skills below it. If any tree you need doesn't have these two levels in it yet, add those manually. (I'll try to change this to always open up the correct trees, but for very high SP counts, this might fail
+You can manually do it as well, by setting all skill levels to 0.",,
+"Step 4: make a build.
+
+Go to the Skill Point optimiser tab. Increase the level of the topmost skill in the list on the left by 1. You can use the button next to the SP cost.
+If you don't have that skill unlocked yet, either unlock it if it only costs ~3 SP to do so, or upgrade the next skill down on the list.
+Repeat until (nearly) all skill points are allocated.",,
+"Step 5: use the build.
+
+Go to the Screenshot tab and screenshot the build to save it somewhere, then use it in-game. You can also save it in the Builder tool, explanations of which are at the bottom of this page.",,
+,,
+Important!,,
+#REF!,,
+,,
+Explanation of warnings,,
+"Impossible build warning: shows up in Sorcerer part of main tree and colours screenshot tab red. Note this doesn't necessarily mean you made a mistake, there's just a crappy skill you need to get to unlock the good skills below it. Get level 1 in such a skill and you're fine. Look at the Troubleshooting tab if you don't know what part of the build is impossible.",,
+Update available warning: above the main tree and colours screenshot tab light green. Shows up when the changelog is edited. See warning above the main tab for a short summary of the change.,,
+,,
+Explanation of settings/data entering,,
+Normal stats,,
+"Efficiency: efficiency is a measure of the damage increase per SP spent. This is a factor (in other words, it multiplies in). That means efficiency > 1 is a damage increase, efficiency 1 is useless and efficiency < 1  hurts your damage.",,
+"Total effect: this displays the total multiplier your skill tree set up gives you, converting gold to damage and using reductions. This can only be used to compare two builds of the same damage and gold type, however, since it's the multiplier the skill tree gives. It doesn't account for differences in artifact effect and base damage of the chosen damage source.",,
+,,
+"Choose main Damage type: Choose Shadow Clone for an idle build without too much tapping, choose Clan Ship for a strong build that relies on a few quick time events, choose Heavenly Strike for a fast, but active and mana-hungry build, and choose Pet damage for a strong build that requires constant tapping.",,
+"Choose main Gold type: Choose pet: Heart of Midas, Fairy, Boss or Chesterson gold. See Troubleshooting and Hints for more info.",,
+"Total SP: Total number of SP you have (doesn't matter if you've spent all of them, just enter the total).",,
+,,
+Ignore skills if not enough SP in tree: Optimiser won't suggest skills you didn't unlock yet (by spending SP in their tree) when the checkbox is clicked (recommended setting is clicked).,,
+Include duration/cooldown: Determines whether duration/cooldown is used to calculate efficiency or not (recommended setting is clicked).,,
+"Individual ignore: Ignore a single skill, so it won't be suggested. Use 'on/off' below the skill name.",,
+"Cumulative efficiency mode: Shows efficiency from 0 -> current level (instead of current level -> next level) in the large tree, list still shows efficiency per level. To check if some skills stand out in particular.",,
+"Downgrade mode: Shows efficiency from current level to one level lower. Since this is sheets, and it's very very annoying to do stuff with prerequisites, it won't see that a skill is a necessary prerequisite and it might recommend you downgrade it. Just ignore the recommendation (or the skill itself, with the on/off dropdown). To not leave gaps in builds, I've also set it to never recommend downgrading level 1 skills. It's not the best way to do it, and it's kind of crude, but it was the simplest way to do that. Finally, -1 will be displayed as efficiency for skill that cannot be downgraded, so ignore all -1's you might see in the tree. It's not a bug, it's an easy way to mark skills with a value they'd never get normally. Tickboxes to upgrade skills will downgrade them instead in Downgrade mode.",,
+"Dark mode: Speaks for itself, changes background colour to darker colours. I'm aware the transition to and from is pretty slow, but I can't help that. Apparently, Dark mode is also a bit slower with calculations, but it should still run just fine.",,
+,,
+Hero: Input which hero is currently your hero dealing the most damage (usually the last one). Used for gold reduction.,,
+"Ascension: Input which version of your hero you're currently on. First buy -> No ascension. Second buy (after the hero reaches level 6000) -> Ascension 1. Third buy (after the ascended hero reaches level 6000) -> Ascension 2.
+Please note that heroes have no portrait border before ascensions, a blue one on the first ascension, a green one on the second ascension, a yellow one on the third ascension, and a light blue/gray one on the fourth ascension.",,
+,,
+Ancient Warrior set: Whether you own this Mythic set or not. x2 Companion attack speed is used for Anchoring Shot.,,
+Chained Clockwork set: Whether you own this Legendary set or not. x1.5 Special attempts is used for Lightning Strike.,,
+Corrupt Emerald Knight set: Whether you own this Legendary set or not. x0.7 Pet skill cooldowns is used for Lightning Burst efficiency.,,
+Bone Mender set: Whether you own this Legendary set or not. x0.9 Companions skill cooldowns is used for Lightning Burst and Coordinated Offensive efficiency.,,
+"Forsaken Battlemage set: Whether you own this Legendary set or not. +1 Multi-cast is used for Volcanic Supremacy, Command Supremacy, and Dagger Storm.",,
+Chief Mechanic set: Whether you own this Legendary set or not. x1.5 Thunder Volley charge speed is used for Voltaic Sails.,,
+Shae set: Whether you own this Mythic set or not. +1 to tier 4 Knight skills is used in the Knight tree.,,
+Ignus set: Whether you own this Mythic set or not. +1 to tier 4 Knight skills is used in the Summoner tree.,,
+Ironheart set: Whether you own this Mythic set or not. +1 to tier 4 Warlord skills is used in the Warlord tree.,,
+Kor set: Whether you own this Mythic set or not. +1 to tier 4 Sorcerer skills is used in the Sorcerer tree.,,
+Styxsis set: Whether you own this Mythic set or not. +1 to tier 4 Rogue skills is used in the Rogue tree.,,
+,,
+"Lucky Foot of Al-Mi'raj artifact: Whether you've maxed Lucky Foot of Al-Mi'raj or not. All probability boost is used for Cleaving Strike, Spoils of War and Ambush.",,
+"All probability on slash: Input the all probability multiplier on your main slash. Your slash is the 5th equipment slot. Input 1 if All Probability is not one of the secondaries. All probability boost is used for Cleaving Strike, Spoils of War and Ambush.",,
+"Critical Chance: Input from stats panel, together with your current in game Cleaving Strike level. That way, the optimiser can calculate what you would have had with a totally blank skill tree. Keep in mind you don't actually have to reset your tree. Critical Chance is used for Cleaving Strike.",,
+,,
+Crafting Power level: Only whales really need to input it. It's used for the effects on the previously listed sets.,,
+Shadow Clone level: Input the level at the end of a push. It's used for special attempts for Lightning Strike.,,
+War Cry level: Input the level at the end of a push. It's used for the Hero attack speed buff for Searing Light.,,
+Taps/sec: Input how many taps you approximately get per second. Yoou get 20 with Power of Swiping. It's used for Lightning Strike.,,
+Max kill time: How many seconds you want to spend at most on a single boss/titan when using Lightning Strike and/or Searing Light. Mostly depends on your own patience.,,
+,,
+Companion Frenzy: Select whether you are in this Abyssal Tournament or not.,,
+,,
+Stats for extra accuracy,,
+"Coins of Ebizu: Is used only for Chesterson gold sources to slightly increase the Ambush efficiency accuracy. Totally superfluous, but maybe for people who want more significant digits in their total effect?",,
+,,
+Extra explanations:,,
+"Lightning Burst, Flash Zip, Anchoring Shot (for everything but Clan Ship) and some other skills have made-up level 1 efficiencies. That's because they're really hard to get a good estimate for. Instead, I use numbers that will tell you when to start leveling them.",,
+"Anchoring Shot for Clan Ship is even weirder. You can choose whether you want to time shots or not (let the Clan mate deal damage). Input at least 2 levels for it to start recommending when timing shots ('Clan Ship' should be selected as Anchoring Shot damage source), and 4 levels without ('Clan Mate' should be selected as Anchoring Shot damage source).",,
+"Lightning Strike is slightly overvalued. I can't do anything about it though, since the inaccuracy is due to your other damage sources still dealing damage while Lightning Strike is still reducing HP by a good amount. This makes the efficiency be a bit off. The error gets smaller for higher levels though. Keep it a bit lower than recommended at lower levels (< 4)",,
+,,
+How to use the Builder (to Save & Restore Builds):,,
+"The Builder Add-On will allow you to save and restore your builds, erase previously saved builds, and to reset the Current Build (i.e. all skills will be set to 0)",,
+To Save the Current Build,,
+"Run the ""Save"" command to save the Current Build to the Saved Builds library.",,
+"1. In the ""Saved Builds"" section, identify the location where you would like to save the Current Build. For example, in the 3rd slot:",,
+#REF!,,
+"2. Enter a Name for the Build you wish to Save, in the Saved Builds section (shown above). If you don't update the name, the previous name will be used as the Build Name. In this example, leave the existing name in place.",,
+"3. In the ""Build Commands"" section, use the ""#"" dropdown to select your Build location (i.e. 3), choose ""Save"" from the Action menu, and ""GO"" from the Command menu.",,
+#REF!,,
+4. The Status window will update to notify you that the Current Build is being saved with the name and location you selected.,,
+#REF!,,
+"5. The Status window will indicate ""Save Complete"" when the Build has been saved.",,
+#REF!,,
+6. The Saved Builds section will be updated with the number of Skill Points and the Current Time that the build was saved. This might be a different timezone than where you live though.,,
+#REF!,,
+To Restore a Saved Build,,
+"Use the ""Restore"" command when you wish to overwrite the Current Build with one of the previously Saved Builds.",,
+"1. In ""Build Commands"", use the # dropdown to select the Saved Build you wish to Restore. In this example, we'll select the Build in slot 8.",,
+#REF!,,
+"2. Set the Action to ""Restore"" and the Command to ""GO""",,
+3. The Status window will update to notify you that the selected build is being restored as the Current Build.,,
+#REF!,,
+"4. Note that it takes longer to Restore a Build than to Save it, and you will need to wait 5-10 seconds while the Build is restored. (You will notice the skill levels being updated one at a time as you wait.)",,
+"5. The Status window will indicate ""Build Restored."" when the task is complete.",,
+#REF!,,
+To Erase a Saved Build,,
+"The ""Erase"" command removes a Saved Build from your library. Use this command when you wish to free up space for a new build, or remove a build that you no longer wish to use. You may also use the ""Save"" command to overwrite a previous build.",,
+"(Note: Erasing a Build does not affect the Current Build, it only removes the build from your Saved Builds library.)",,
+"1. In ""Build Commands"", use the # dropdown to select the Build you wish to Erase from the library. In this example, we will Erase the build in location 6.",,
+#REF!,,
+"2. Set the Action to ""Erase"" and the Command to ""GO""",,
+3. The Status window will indicate the Build Name and Location to be Erased.,,
+#REF!,,
+"4. When complete, the Status window will read ""Build Erased.""",,
+#REF!,,
+"5. The Saved Builds section will be updated with the name ""Empty"", will zero out the SPs, and erase the Last Save time.",,
+#REF!,,
+"6. Before you can Save a new Build to the Empty slot, you must enter in a new Build Name. If you leave the Build Name as ""Empty"", you will receive the following error in the Status window when you attempt to Save:",,
+#REF!,,
+To Reset the Current Build,,
+"Use ""Reset"" when you wish to start entering a build from scratch, and don't wish to save the Current Build (or else use the ""Save"" command, if you wish to save the Current Build first).",,
+"1. In ""Build Commands"", which build you select is not important, choose ""Reset"" from the Action menu, and ""GO"" from the Command menu.",,
+#REF!,,
+2. The Status window will update to indicate that the Current Build is being Reset.,,
+#REF!,,
+"3. After the Current Build has been Reset, the Status window will read ""Reset Complete.""",,
+#REF!,,
+"(Note: The ""Reset"" functionality is similar to using the ""Clear tree"" checkbox. The only difference is that ""Reset"" will set all skills to 0, whereas ""Clear tree"" will set the first skill in each tree to ""2"".)",,
+Miscellaneous Notes,,
+"- The On/Off settings for each individual skill are also not saved with the individual Builds (however, this feature will be added in the next version of the Builder)",,
+"- You may wish to format the ""Last Save"" column with the Date/Time settings of your region",,
+- Copy paste everything to the right of 'Current' in the 'Builds' tab to a new copy to keep your saved builds. Preferably use 'paste special -> paste values only' to keep the darkmode conditional formatting intact.,,
+Note: Instruction images are located at: https://imgur.com/a/mjLo7sA,,

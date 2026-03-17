@@ -3,3 +3,9 @@ node_modules
 */.vscode
 */.history
 .env
+*/*/node_modules
+*.log
+*/node_modules
+dist
+*/*/dist
+*/*/.expo
