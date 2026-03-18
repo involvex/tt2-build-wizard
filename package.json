@@ -19,10 +19,18 @@
 	"scripts": {
 		"test": "bun test"
 	},
-  "resolutions": {
-    "expo-file-system": "55.0.11"
-  },
 	"prettier": "@involvex/prettier-config",
+	"resolutions": {
+		"expo-file-system": "55.0.11"
+	},
+	"dependencies": {
+		"@eslint/eslintrc": "^3.3.5",
+		"@typescript-eslint/eslint-plugin": "^8.57.1",
+		"eslint-plugin-expo": "^1.0.0",
+		"eslint-plugin-import": "^2.32.0",
+		"eslint-plugin-react": "^7.37.5",
+		"eslint-plugin-react-hooks": "^7.0.1"
+	},
 	"devDependencies": {
 		"@involvex/prettier-config": "^0.0.4",
 		"@types/bun": "latest",

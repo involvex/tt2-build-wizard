@@ -1,17 +1,17 @@
 {
-  "name": "@tt2-build-wizard/logic",
-  "version": "1.0.0",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "type": "module",
-  "scripts": {
-    "build": "bun build ./index.ts --outdir ./dist && tsc --emitDeclarationOnly --declaration --project tsconfig.json"
-  },
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  }
+	"name": "@tt2-build-wizard/logic",
+	"version": "1.0.0",
+	"type": "module",
+	"main": "dist/index.js",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"build": "bun build ./index.ts --outdir ./dist && tsc --emitDeclarationOnly --declaration --project tsconfig.json"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	}
 }

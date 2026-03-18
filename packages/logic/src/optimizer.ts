@@ -1,160 +1,182 @@
-import skillsData from './skills.json';
-import reductionsData from './reductions.json';
+import reductionsData from './reductions.json'
+import skillsData from './skills.json'
 
-export type BuildType = 'Clan Ship' | 'Shadow Clone' | 'Heavenly Strike' | 'Pet' | 'Dagger' | 'Gold Gun';
-export type GoldSource = 'Fairy' | 'HoG' | 'Chesterson';
+export type BuildType =
+	| 'Clan Ship'
+	| 'Shadow Clone'
+	| 'Heavenly Strike'
+	| 'Pet'
+	| 'Dagger'
+	| 'Gold Gun'
+export type GoldSource = 'Fairy' | 'HoG' | 'Chesterson'
 
 export interface SkillInfo {
-    Name: string;
-    MaxLevel: number;
-    SPReq: number;
-    TalentReq: string;
-    BonusTypeA: string;
-    BonusTypeB: string;
-    BonusTypeC: string;
-    [key: string]: any; // For A0, A1... Co0, Co1...
+	Name: string
+	MaxLevel: number
+	SPReq: number
+	TalentReq: string
+	BonusTypeA: string
+	BonusTypeB: string
+	BonusTypeC: string
+	[key: string]: any // For A0, A1... Co0, Co1...
 }
 
 export interface SkillLevel {
-    skillId: string;
-    level: number;
+	skillId: string
+	level: number
 }
 
 export class OptimizerEngine {
-    private skills: Record<string, SkillInfo>;
-    private reductions: Record<string, Record<string, number | null>>;
+	private skills: Record<string, SkillInfo>
+	private reductions: Record<string, Record<string, number | null>>
 
-    constructor() {
-        this.skills = skillsData as Record<string, SkillInfo>;
-        this.reductions = reductionsData as Record<string, Record<string, number | null>>;
-    }
+	constructor() {
+		this.skills = skillsData as Record<string, SkillInfo>
+		this.reductions = reductionsData as Record<
+			string,
+			Record<string, number | null>
+		>
+	}
 
-    private getBonus(skillId: string, level: number, bonusChar: 'A' | 'B' | 'C'): number {
-        const val = this.skills[skillId][`${bonusChar}${level}`];
-        if (val === '-' || val === undefined || parseFloat(val) === 0) return 1;
-        return parseFloat(val);
-    }
+	private getBonus(
+		skillId: string,
+		level: number,
+		bonusChar: 'A' | 'B' | 'C',
+	): number {
+		const val = this.skills[skillId][`${bonusChar}${level}`]
+		if (val === '-' || val === undefined || parseFloat(val) === 0) return 1
+		return parseFloat(val)
+	}
 
-    private getCost(skillId: string, level: number): number {
-        const val = this.skills[skillId][`Co${level}`];
-        return parseInt(val) || 0;
-    }
+	private getCost(skillId: string, level: number): number {
+		const val = this.skills[skillId][`Co${level}`]
+		return parseInt(val) || 0
+	}
 
-    private calculateEfficiency(
-        skillId: string, 
-        currentLevel: number, 
-        build: BuildType, 
-        gold: GoldSource
-    ): number {
-        const skill = this.skills[skillId];
-        if (currentLevel >= skill.MaxLevel) return -1;
+	private calculateEfficiency(
+		skillId: string,
+		currentLevel: number,
+		build: BuildType,
+		gold: GoldSource,
+	): number {
+		const skill = this.skills[skillId]
+		if (currentLevel >= skill.MaxLevel) return -1
 
-        const nextLevel = currentLevel + 1;
-        const spCost = this.getCost(skillId, nextLevel) - this.getCost(skillId, currentLevel);
-        
-        if (spCost <= 0) return 0;
+		const nextLevel = currentLevel + 1
+		const spCost =
+			this.getCost(skillId, nextLevel) - this.getCost(skillId, currentLevel)
 
-        let totalLogGain = 0;
+		if (spCost <= 0) return 0
 
-        // Calculate for each bonus type (A, B, C)
-        for (const bonusChar of ['A', 'B', 'C'] as const) {
-            const bonusType = skill[`BonusType${bonusChar}`];
-            if (bonusType === 'None' || !bonusType) continue;
+		let totalLogGain = 0
 
-            // Normalize bonus type key if needed
-            let reductionKey = bonusType;
-            if (bonusType === 'TapDamage') reductionKey = 'TapDmg';
-            if (bonusType === 'AllHelperDamage') reductionKey = 'AllHelperDmg';
+		// Calculate for each bonus type (A, B, C)
+		for (const bonusChar of ['A', 'B', 'C'] as const) {
+			const bonusType = skill[`BonusType${bonusChar}`]
+			if (bonusType === 'None' || !bonusType) continue
 
-            const reductionFactor = (this.reductions[reductionKey]?.[build] ?? 0)
-                                 || (this.reductions[reductionKey]?.[gold] ?? 0);
+			// Normalize bonus type key if needed
+			let reductionKey = bonusType
+			if (bonusType === 'TapDamage') reductionKey = 'TapDmg'
+			if (bonusType === 'AllHelperDamage') reductionKey = 'AllHelperDmg'
 
-            const currentBonus = this.getBonus(skillId, currentLevel, bonusChar);
-            const nextBonus = this.getBonus(skillId, nextLevel, bonusChar);
+			const reductionFactor =
+				(this.reductions[reductionKey]?.[build] ?? 0) ||
+				(this.reductions[reductionKey]?.[gold] ?? 0)
 
-            if (currentBonus > 0 && nextBonus > 0) {
-                const gain = Math.log10(nextBonus) - Math.log10(currentBonus);
-                totalLogGain += gain * (reductionFactor || 0);
-            }
-        }
+			const currentBonus = this.getBonus(skillId, currentLevel, bonusChar)
+			const nextBonus = this.getBonus(skillId, nextLevel, bonusChar)
 
-        return totalLogGain / spCost;
-    }
+			if (currentBonus > 0 && nextBonus > 0) {
+				const gain = Math.log10(nextBonus) - Math.log10(currentBonus)
+				totalLogGain += gain * (reductionFactor || 0)
+			}
+		}
 
-    private canUnlockSkill(
-        skillId: string, 
-        currentLevels: Record<string, number>,
-        totalSpentSP: number
-    ): boolean {
-        const skill = this.skills[skillId];
-        if (!skill) return false;
+		return totalLogGain / spCost
+	}
 
-        // Check Talent Requirement (Parent skill)
-        if (skill.TalentReq !== 'None' && skill.TalentReq !== '') {
-            const parentLevel = currentLevels[skill.TalentReq] || 0;
-            if (parentLevel < 1) return false;
-        }
+	private canUnlockSkill(
+		skillId: string,
+		currentLevels: Record<string, number>,
+		totalSpentSP: number,
+	): boolean {
+		const skill = this.skills[skillId]
+		if (!skill) return false
 
-        // Check SP Requirement (Total SP spent in tree/branch - simplified to total for now)
-        if (totalSpentSP < skill.SPReq) return false;
+		// Check Talent Requirement (Parent skill)
+		if (skill.TalentReq !== 'None' && skill.TalentReq !== '') {
+			const parentLevel = currentLevels[skill.TalentReq] || 0
+			if (parentLevel < 1) return false
+		}
 
-        return true;
-    }
+		// Check SP Requirement (Total SP spent in tree/branch - simplified to total for now)
+		if (totalSpentSP < skill.SPReq) return false
 
-    public optimize(
-        availableSP: number, 
-        build: BuildType, 
-        gold: GoldSource, 
-        initialLevels: Record<string, number> = {}
-    ): SkillLevel[] {
-        const currentLevels = { ...initialLevels };
-        const results: SkillLevel[] = [];
-        
-        // Initialize levels for all skills and calculate initial spent SP
-        let spentSP = 0;
-        for (const skillId in this.skills) {
-            if (currentLevels[skillId] === undefined) {
-                currentLevels[skillId] = 0;
-            } else if (currentLevels[skillId] > 0) {
-                // Calculate cost of current levels
-                spentSP += this.getCost(skillId, currentLevels[skillId]);
-            }
-        }
+		return true
+	}
 
-        // Safety break to prevent infinite loops
-        let iterations = 0;
-        const maxIterations = 2000;
+	public optimize(
+		availableSP: number,
+		build: BuildType,
+		gold: GoldSource,
+		initialLevels: Record<string, number> = {},
+	): SkillLevel[] {
+		const currentLevels = {...initialLevels}
+		const results: SkillLevel[] = []
 
-        while (spentSP < availableSP && iterations < maxIterations) {
-            iterations++;
-            let bestSkillId: string | null = null;
-            let maxEff = -1;
+		// Initialize levels for all skills and calculate initial spent SP
+		let spentSP = 0
+		for (const skillId in this.skills) {
+			if (currentLevels[skillId] === undefined) {
+				currentLevels[skillId] = 0
+			} else if (currentLevels[skillId] > 0) {
+				// Calculate cost of current levels
+				spentSP += this.getCost(skillId, currentLevels[skillId])
+			}
+		}
 
-            for (const skillId in this.skills) {
-                // NEW: Check if skill is unlockable
-                if (!this.canUnlockSkill(skillId, currentLevels, spentSP)) continue;
+		// Safety break to prevent infinite loops
+		let iterations = 0
+		const maxIterations = 2000
 
-                const eff = this.calculateEfficiency(skillId, currentLevels[skillId], build, gold);
-                if (eff > maxEff) {
-                    maxEff = eff;
-                    bestSkillId = skillId;
-                }
-            }
+		while (spentSP < availableSP && iterations < maxIterations) {
+			iterations++
+			let bestSkillId: string | null = null
+			let maxEff = -1
 
-            if (!bestSkillId || maxEff <= 0) break;
+			for (const skillId in this.skills) {
+				// NEW: Check if skill is unlockable
+				if (!this.canUnlockSkill(skillId, currentLevels, spentSP)) continue
 
-            const nextLevel = currentLevels[bestSkillId] + 1;
-            const cost = this.getCost(bestSkillId, nextLevel) - this.getCost(bestSkillId, currentLevels[bestSkillId]);
+				const eff = this.calculateEfficiency(
+					skillId,
+					currentLevels[skillId],
+					build,
+					gold,
+				)
+				if (eff > maxEff) {
+					maxEff = eff
+					bestSkillId = skillId
+				}
+			}
 
-            if (spentSP + cost > availableSP) {
-                break; 
-            }
+			if (!bestSkillId || maxEff <= 0) break
 
-            currentLevels[bestSkillId] = nextLevel;
-            spentSP += cost;
-            results.push({ skillId: bestSkillId, level: nextLevel });
-        }
+			const nextLevel = currentLevels[bestSkillId] + 1
+			const cost =
+				this.getCost(bestSkillId, nextLevel) -
+				this.getCost(bestSkillId, currentLevels[bestSkillId])
 
-        return results;
-    }
+			if (spentSP + cost > availableSP) {
+				break
+			}
+
+			currentLevels[bestSkillId] = nextLevel
+			spentSP += cost
+			results.push({skillId: bestSkillId, level: nextLevel})
+		}
+
+		return results
+	}
 }
