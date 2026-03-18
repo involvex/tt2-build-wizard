@@ -8,6 +8,7 @@ import {Text, View, ScrollView, TouchableOpacity, Animated} from 'react-native'
 import {Card, Button, Badge, Input} from '../components/ui'
 import React, {useState, useMemo, useEffect} from 'react'
 import {useAppStore} from '../store/useAppStore'
+import {RefreshCw} from 'lucide-react-native'
 
 const engine = new OptimizerEngine()
 
@@ -139,13 +140,15 @@ export const OptimizerScreen = () => {
 				{/* Action Buttons */}
 				<View className="flex-row gap-3 mb-10">
 					<Button onPress={calculate} className="flex-1 h-16">
-						Run Optimization
+						<Text className="text-white font-black uppercase tracking-widest">
+							Run Optimization
+						</Text>
 					</Button>
 					<TouchableOpacity
 						onPress={reset}
-						className="bg-slate-900 dark:bg-slate-900 light:bg-slate-100 border border-slate-800 dark:border-slate-800 light:border-slate-300 w-16 h-16 rounded-2xl items-center justify-center"
+						className="bg-slate-900 dark:bg-slate-900 light:bg-slate-100 border border-slate-800 dark:border-slate-800 light:border-slate-300 w-16 h-16 rounded-2xl items-center justify-center shadow-lg"
 					>
-						<Text>🔄</Text>
+						<RefreshCw size={24} color="#94a3b8" />
 					</TouchableOpacity>
 				</View>
 

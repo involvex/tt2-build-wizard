@@ -6,6 +6,7 @@ import {
 	TextInput,
 	Animated,
 } from 'react-native'
+import {Search, BookOpen, ChevronRight} from 'lucide-react-native'
 import React, {useState, useEffect, useMemo} from 'react'
 import {Card, Badge} from '../components/ui'
 
@@ -90,7 +91,7 @@ export const GuidesScreen = () => {
 
 				{/* Search Bar */}
 				<View className="bg-slate-900 dark:bg-slate-900 light:bg-slate-100 border border-slate-800 dark:border-slate-800 light:border-slate-200 rounded-2xl px-4 py-3 flex-row items-center mb-8">
-					<Text>🔍</Text>
+					<Search size={18} color="#64748b" />
 					<TextInput
 						className="flex-1 text-white dark:text-white light:text-slate-900 ml-3 text-base"
 						placeholder="Search guides or categories..."
@@ -102,7 +103,7 @@ export const GuidesScreen = () => {
 
 				<View className="flex-row items-center justify-between mb-6">
 					<View className="flex-row items-center">
-						<Text>📖</Text>
+						<BookOpen size={20} color="#fbbf24" />
 						<Text className="text-lg font-black text-white dark:text-white light:text-slate-900 ml-3 tracking-tighter">
 							Essential Guides
 						</Text>
@@ -126,7 +127,7 @@ export const GuidesScreen = () => {
 									</View>
 								</View>
 								<View className="bg-slate-800 dark:bg-slate-800 light:bg-slate-200 p-2 rounded-full">
-									<Text>➡</Text>
+									<ChevronRight size={16} color="#94a3b8" />
 								</View>
 							</View>
 						</Card>

@@ -85,13 +85,13 @@ export const RaidScreen = () => {
 									className="flex-1 bg-slate-800/50 dark:bg-slate-800/50 light:bg-slate-200 rounded-xl p-3 items-center border border-slate-700/30 dark:border-slate-700/30 light:border-slate-300"
 								>
 									<Text
-										className="text-[10px] text-slate-400 font-bold uppercase text-center mb-1"
-										numberOfLines={1}
+										className="text-[9px] text-slate-400 font-black uppercase text-center mb-1 h-8"
+										numberOfLines={2}
 									>
-										{cardId}
+										{cardId.replace(/([A-Z])/g, ' $1').trim()}
 									</Text>
 									<Text className="text-indigo-400 font-black text-lg">
-										{playerData.raidStats.cardLevels[cardId]}
+										{playerData.raidStats.cardLevels[cardId] || 0}
 									</Text>
 								</View>
 							))}

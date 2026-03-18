@@ -5,11 +5,20 @@ import {
 	TouchableOpacity,
 	Alert,
 	Animated,
+	ActivityIndicator,
 } from 'react-native'
-import Clipboard from '@react-native-clipboard/clipboard'
+import {
+	Zap,
+	Database,
+	Trophy,
+	Swords,
+	Shield,
+	BookOpen,
+} from 'lucide-react-native'
 import React, {useState, useEffect, useMemo} from 'react'
 import {useAppStore} from '../store/useAppStore'
 import {Card, Button} from '../components/ui'
+import * as Clipboard from 'expo-clipboard'
 
 export const DashboardScreen = () => {
 	const {playerData, importSaveData} = useAppStore()
@@ -27,7 +36,7 @@ export const DashboardScreen = () => {
 	const handleImport = async () => {
 		setIsImporting(true)
 		try {
-			const content = await Clipboard.getString()
+			const content = await Clipboard.getStringAsync()
 			if (!content) {
 				Alert.alert('Clipboard Empty', 'Please copy your game data JSON first.')
 				return
@@ -43,6 +52,20 @@ export const DashboardScreen = () => {
 			setIsImporting(false)
 		}
 	}
+
+	const StatItem = ({icon: Icon, label, value, color}: any) => (
+		<View className="w-[48%] mb-4">
+			<Card className="p-4 items-center justify-center bg-slate-900/40 border-slate-800">
+				<Icon size={20} color={color} />
+				<Text className="text-slate-500 text-[10px] font-black uppercase tracking-widest mt-2 mb-1">
+					{label}
+				</Text>
+				<Text className="text-white dark:text-white light:text-slate-900 font-black text-lg">
+					{value}
+				</Text>
+			</Card>
+		</View>
+	)
 
 	return (
 		<Animated.View style={{flex: 1, opacity: fadeAnim}}>
@@ -62,107 +85,94 @@ export const DashboardScreen = () => {
 					</Text>
 				</View>
 
-				{/* Import Card */}
-				{!playerData && (
-					<Card className="mb-6 bg-indigo-600/10 border-indigo-500/30">
-						<Text className="text-indigo-400 font-bold text-center mb-4">
-							Connect your game account to sync your progress.
+				{playerData ? (
+					<View className="flex-row flex-wrap justify-between">
+						<StatItem
+							icon={Trophy}
+							label="Max Stage"
+							value={playerData.maxStage.toLocaleString()}
+							color="#fbbf24"
+						/>
+						<StatItem
+							icon={Zap}
+							label="Total SP"
+							value={playerData.totalSP.toString()}
+							color="#818cf8"
+						/>
+						<StatItem
+							icon={Database}
+							label="Artifacts"
+							value={Object.keys(playerData.artifacts).length.toString()}
+							color="#34d399"
+						/>
+						<StatItem
+							icon={Swords}
+							label="Raid Level"
+							value={playerData.raidStats.playerLevel.toString()}
+							color="#f87171"
+						/>
+
+						<Card className="w-full mt-2 mb-6 p-6 bg-indigo-600 shadow-xl shadow-indigo-500/20">
+							<Text className="text-indigo-100 text-[10px] font-black uppercase tracking-widest mb-1">
+								Lifetime Relics
+							</Text>
+							<Text className="text-white font-black text-3xl">
+								{playerData.lifetimeRelics.toExponential(2)}
+							</Text>
+						</Card>
+					</View>
+				) : (
+					<Card className="p-8 items-center bg-slate-900/40 border-slate-800 border-dashed">
+						<Database size={48} color="#475569" className="mb-4" />
+						<Text className="text-white font-bold text-center text-lg mb-2">
+							No Data Found
+						</Text>
+						<Text className="text-slate-500 text-center text-sm mb-6 leading-5">
+							Copy your player data from the game or TT2Master and click the
+							button below to populate the optimizer.
 						</Text>
 						<Button
 							onPress={handleImport}
-							className="bg-indigo-600"
 							disabled={isImporting}
+							className="w-full"
 						>
-							Import from Clipboard
+							{isImporting ? (
+								<ActivityIndicator color="white" />
+							) : (
+								<Text className="text-white font-black uppercase">
+									Import from Clipboard
+								</Text>
+							)}
 						</Button>
 					</Card>
 				)}
 
-				{playerData && (
-					<>
-						{/* Summary Grid */}
-						<View className="flex-row flex-wrap justify-between mb-6">
-							<StatCard
-								label="Max Stage"
-								value={playerData.maxStage.toLocaleString()}
-								icon="🏆"
-								className="w-[48%] mb-4"
-							/>
-							<StatCard
-								label="Total SP"
-								value={playerData.totalSP.toString()}
-								icon="✨"
-								className="w-[48%] mb-4"
-							/>
-							<StatCard
-								label="Artifacts"
-								value={`${Object.keys(playerData.artifacts).length}/103`}
-								icon="🏺"
-								className="w-[48%]"
-							/>
-							<StatCard
-								label="Raid Level"
-								value={playerData.raidStats.playerLevel.toString()}
-								icon="⚔️"
-								className="w-[48%]"
-							/>
-						</View>
-
-						{/* Quick Actions */}
-						<Text className="text-slate-500 text-[10px] font-black uppercase tracking-[2px] mb-4 ml-1">
-							Quick Actions
-						</Text>
-
-						<TouchableOpacity
-							className="bg-slate-900 dark:bg-slate-900 light:bg-slate-100 border border-slate-800 dark:border-slate-800 light:border-slate-200 rounded-3xl p-5 mb-4 flex-row items-center justify-between"
-							onPress={handleImport}
-						>
-							<View className="flex-row items-center">
-								<View className="bg-emerald-500/20 p-2.5 rounded-xl mr-4">
-									<Text>🔄</Text>
-								</View>
-								<View>
-									<Text className="text-white dark:text-white light:text-slate-900 font-bold">
-										Update Data
-									</Text>
-									<Text className="text-slate-500 text-xs">
-										Sync from clipboard
-									</Text>
-								</View>
-							</View>
-							<Text className="text-slate-600">›</Text>
+				<View className="mt-8">
+					<Text className="text-slate-500 text-[10px] font-black uppercase tracking-[2px] mb-4 ml-1">
+						Quick Access
+					</Text>
+					<View className="flex-row gap-3">
+						<TouchableOpacity className="flex-1 bg-slate-900 border border-slate-800 rounded-2xl p-4 items-center">
+							<Zap size={24} color="#818cf8" />
+							<Text className="text-white text-[10px] font-bold mt-2">
+								SKILLS
+							</Text>
 						</TouchableOpacity>
-					</>
-				)}
+						<TouchableOpacity className="flex-1 bg-slate-900 border border-slate-800 rounded-2xl p-4 items-center">
+							<Shield size={24} color="#34d399" />
+							<Text className="text-white text-[10px] font-bold mt-2">
+								SETS
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity className="flex-1 bg-slate-900 border border-slate-800 rounded-2xl p-4 items-center">
+							<BookOpen size={24} color="#fbbf24" />
+							<Text className="text-white text-[10px] font-bold mt-2">
+								GUIDES
+							</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
 			</ScrollView>
 		</Animated.View>
 	)
 }
-
-const StatCard = ({
-	label,
-	value,
-	icon,
-	className,
-}: {
-	label: string
-	value: string
-	icon: string
-	className?: string
-}) => (
-	<View
-		className={`bg-slate-900 dark:bg-slate-900 light:bg-slate-100 border border-slate-800 dark:border-slate-800 light:border-slate-200 rounded-3xl p-5 ${className}`}
-	>
-		<View className="flex-row justify-between items-start mb-3">
-			<View className="bg-slate-800/50 p-2 rounded-xl">
-				<Text>{icon}</Text>
-			</View>
-		</View>
-		<Text className="text-slate-500 text-[10px] font-black uppercase tracking-wider mb-1">
-			{label}
-		</Text>
-		<Text className="text-white dark:text-white light:text-slate-900 text-xl font-black tracking-tight">
-			{value}
-		</Text>
-	</View>
-)

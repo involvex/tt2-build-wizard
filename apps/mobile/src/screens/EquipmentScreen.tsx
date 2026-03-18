@@ -65,16 +65,16 @@ export const EquipmentScreen = () => {
 					Crafting Recommendations
 				</Text>
 
-				{recommendations.slice(0, 10).map((rec, index) => (
+				{recommendations.slice(0, 15).map((rec, index) => (
 					<Card
-						key={index}
+						key={`${rec.setName}-${index}`}
 						className="mb-4 border-slate-800 dark:border-slate-800 light:border-slate-200 bg-slate-900/50 dark:bg-slate-900/50 light:bg-slate-100"
 					>
 						<View className="flex-row justify-between items-start mb-2">
 							<View className="flex-1">
 								<View className="flex-row items-center mb-1">
-									<Text className="text-white dark:text-white light:text-slate-900 font-bold text-lg mr-2">
-										{rec.setName}
+									<Text className="text-white dark:text-white light:text-slate-900 font-black text-lg mr-2">
+										{rec.setName.replace(/([A-Z])/g, ' $1').trim()}
 									</Text>
 									<Badge
 										active={rec.type === 'Mythic'}
@@ -83,7 +83,7 @@ export const EquipmentScreen = () => {
 										{rec.type}
 									</Badge>
 								</View>
-								<Text className="text-slate-400 text-xs italic">
+								<Text className="text-slate-400 text-xs italic leading-4">
 									{rec.reason}
 								</Text>
 							</View>

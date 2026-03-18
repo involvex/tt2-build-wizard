@@ -86,7 +86,9 @@ export const ArtifactsScreen = () => {
 					{isCalculating ? (
 						<ActivityIndicator color="white" />
 					) : (
-						'Calculate Upgrades'
+						<Text className="text-white font-black uppercase tracking-widest">
+							Calculate Upgrades
+						</Text>
 					)}
 				</Button>
 

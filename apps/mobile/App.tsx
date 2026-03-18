@@ -4,16 +4,39 @@ import {OptimizerScreen} from './src/screens/OptimizerScreen'
 import {EquipmentScreen} from './src/screens/EquipmentScreen'
 import {DashboardScreen} from './src/screens/DashboardScreen'
 import {ArtifactsScreen} from './src/screens/ArtifactsScreen'
+import {SettingsScreen} from './src/screens/SettingsScreen'
 import {GuidesScreen} from './src/screens/GuidesScreen'
 import {RaidScreen} from './src/screens/RaidScreen'
+import {useAppStore} from './src/store/useAppStore'
+import React, {useState, useEffect} from 'react'
+import {Settings} from 'lucide-react-native'
 import {useColorScheme} from 'nativewind'
-import React, {useState} from 'react'
 import './global.css'
 
 export default function App() {
-	const {colorScheme, toggleColorScheme} = useColorScheme()
+	const {setColorScheme} = useColorScheme()
+	const {theme, setTheme} = useAppStore()
+
+	// Sync store theme to nativewind on mount and when store changes
+	useEffect(() => {
+		if (theme) {
+			setColorScheme(theme)
+		}
+	}, [theme, setColorScheme])
+
+	const toggleTheme = () => {
+		const newTheme = theme === 'dark' ? 'light' : 'dark'
+		setTheme(newTheme)
+	}
+
 	const [activeTab, setActiveTab] = useState<
-		'dashboard' | 'artifacts' | 'raid' | 'optimizer' | 'equipment' | 'guides'
+		| 'dashboard'
+		| 'artifacts'
+		| 'raid'
+		| 'optimizer'
+		| 'equipment'
+		| 'guides'
+		| 'settings'
 	>('dashboard')
 
 	return (
@@ -23,7 +46,7 @@ export default function App() {
 				style={{flex: 1}}
 			>
 				<StatusBar
-					barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
+					barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
 				/>
 
 				{/* App Header */}
@@ -45,14 +68,31 @@ export default function App() {
 							</Text>
 						</View>
 					</View>
-					<TouchableOpacity
-						onPress={toggleColorScheme}
-						className="bg-slate-900 dark:bg-slate-900 light:bg-slate-200 p-3 rounded-2xl border border-slate-800 dark:border-slate-800 light:border-slate-300"
-					>
-						<Text className="text-slate-400 dark:text-slate-400 light:text-slate-600 font-bold">
-							{colorScheme === 'dark' ? '🌙' : '☀️'}
-						</Text>
-					</TouchableOpacity>
+					<View className="flex-row items-center">
+						<TouchableOpacity
+							onPress={() => setActiveTab('settings')}
+							className={`p-3 rounded-2xl border mr-2 ${activeTab === 'settings' ? 'bg-indigo-600 border-indigo-500' : 'bg-slate-900 border-slate-800'} dark:bg-slate-900 light:bg-slate-200 dark:border-slate-800 light:border-slate-300`}
+						>
+							<Settings
+								size={20}
+								color={
+									activeTab === 'settings'
+										? 'white'
+										: theme === 'dark'
+											? '#94a3b8'
+											: '#475569'
+								}
+							/>
+						</TouchableOpacity>
+						<TouchableOpacity
+							onPress={toggleTheme}
+							className="bg-slate-900 dark:bg-slate-900 light:bg-slate-200 p-3 rounded-2xl border border-slate-800 dark:border-slate-800 light:border-slate-300"
+						>
+							<Text className="text-slate-400 dark:text-slate-400 light:text-slate-600 font-bold">
+								{theme === 'dark' ? '🌙' : '☀️'}
+							</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
 
 				{/* Screen Content */}
@@ -63,6 +103,7 @@ export default function App() {
 					{activeTab === 'optimizer' && <OptimizerScreen />}
 					{activeTab === 'equipment' && <EquipmentScreen />}
 					{activeTab === 'guides' && <GuidesScreen />}
+					{activeTab === 'settings' && <SettingsScreen />}
 				</View>
 
 				{/* Bottom Navigation Bar */}
@@ -73,42 +114,42 @@ export default function App() {
 					<View className="bg-slate-900/80 dark:bg-slate-900/80 light:bg-slate-200/80 border border-slate-800 dark:border-slate-800 light:border-slate-300 p-1.5 rounded-3xl flex-row items-center shadow-2xl">
 						<TouchableOpacity
 							onPress={() => setActiveTab('dashboard')}
-							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'dashboard' ? (colorScheme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
+							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'dashboard' ? (theme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
 						>
 							<Text className="text-xs">🏠</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity
 							onPress={() => setActiveTab('artifacts')}
-							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'artifacts' ? (colorScheme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
+							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'artifacts' ? (theme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
 						>
 							<Text className="text-xs">🏺</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity
 							onPress={() => setActiveTab('raid')}
-							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'raid' ? (colorScheme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
+							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'raid' ? (theme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
 						>
 							<Text className="text-xs">⚔️</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity
 							onPress={() => setActiveTab('optimizer')}
-							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'optimizer' ? (colorScheme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
+							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'optimizer' ? (theme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
 						>
 							<Text className="text-xs">⚡</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity
 							onPress={() => setActiveTab('equipment')}
-							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'equipment' ? (colorScheme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
+							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'equipment' ? (theme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
 						>
 							<Text className="text-xs">🛡️</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity
 							onPress={() => setActiveTab('guides')}
-							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'guides' ? (colorScheme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
+							className={`flex-1 flex-row items-center justify-center py-3 rounded-2xl ${activeTab === 'guides' ? (theme === 'dark' ? 'bg-slate-800' : 'bg-slate-300') : ''}`}
 						>
 							<Text className="text-xs">📚</Text>
 						</TouchableOpacity>
