@@ -81,6 +81,26 @@ export class OptimizerEngine {
         return totalLogGain / spCost;
     }
 
+    private canUnlockSkill(
+        skillId: string, 
+        currentLevels: Record<string, number>,
+        totalSpentSP: number
+    ): boolean {
+        const skill = this.skills[skillId];
+        if (!skill) return false;
+
+        // Check Talent Requirement (Parent skill)
+        if (skill.TalentReq !== 'None' && skill.TalentReq !== '') {
+            const parentLevel = currentLevels[skill.TalentReq] || 0;
+            if (parentLevel < 1) return false;
+        }
+
+        // Check SP Requirement (Total SP spent in tree/branch - simplified to total for now)
+        if (totalSpentSP < skill.SPReq) return false;
+
+        return true;
+    }
+
     public optimize(
         availableSP: number, 
         build: BuildType, 
@@ -95,14 +115,15 @@ export class OptimizerEngine {
         for (const skillId in this.skills) {
             if (currentLevels[skillId] === undefined) {
                 currentLevels[skillId] = 0;
-            } else {
+            } else if (currentLevels[skillId] > 0) {
+                // Calculate cost of current levels
                 spentSP += this.getCost(skillId, currentLevels[skillId]);
             }
         }
 
         // Safety break to prevent infinite loops
         let iterations = 0;
-        const maxIterations = 1000;
+        const maxIterations = 2000;
 
         while (spentSP < availableSP && iterations < maxIterations) {
             iterations++;
@@ -110,6 +131,9 @@ export class OptimizerEngine {
             let maxEff = -1;
 
             for (const skillId in this.skills) {
+                // NEW: Check if skill is unlockable
+                if (!this.canUnlockSkill(skillId, currentLevels, spentSP)) continue;
+
                 const eff = this.calculateEfficiency(skillId, currentLevels[skillId], build, gold);
                 if (eff > maxEff) {
                     maxEff = eff;
@@ -123,10 +147,6 @@ export class OptimizerEngine {
             const cost = this.getCost(bestSkillId, nextLevel) - this.getCost(bestSkillId, currentLevels[bestSkillId]);
 
             if (spentSP + cost > availableSP) {
-                // If the best skill is too expensive, we don't just stop.
-                // We should technically look for the next best that fits, 
-                // but for now, we'll mark this skill as skipped for this run.
-                // To keep it simple, we'll just break if the absolute best doesn't fit.
                 break; 
             }
 
