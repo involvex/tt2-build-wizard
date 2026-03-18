@@ -25,7 +25,7 @@
 				"monochromeImage": "./assets/android-icon-monochrome.png"
 			},
 			"predictiveBackGestureEnabled": false,
-			"versionCode": 0,
+			"versionCode": 1,
 			"package": "com.involvex.tt2buildwizard"
 		},
 		"web": {
