@@ -19,6 +19,9 @@
 	"scripts": {
 		"test": "bun test"
 	},
+  "resolutions": {
+    "expo-file-system": "55.0.11"
+  },
 	"prettier": "@involvex/prettier-config",
 	"devDependencies": {
 		"@involvex/prettier-config": "^0.0.4",

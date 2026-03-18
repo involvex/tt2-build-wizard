@@ -5,12 +5,10 @@ import {
 	TouchableOpacity,
 	Alert,
 	Animated,
-	Platform,
 } from 'react-native'
 import Clipboard from '@react-native-clipboard/clipboard'
 import React, {useState, useEffect, useMemo} from 'react'
 import {useAppStore} from '../store/useAppStore'
-import * as FileSystem from 'expo-file-system'
 import {Card, Button} from '../components/ui'
 
 export const DashboardScreen = () => {
@@ -25,41 +23,6 @@ export const DashboardScreen = () => {
 			useNativeDriver: true,
 		}).start()
 	}, [fadeAnim])
-
-	const handleAutoDetect = async () => {
-		if (Platform.OS !== 'android') {
-			Alert.alert('Unsupported', 'Auto-detection is only available on Android.')
-			return
-		}
-
-		setIsImporting(true)
-		try {
-			// Common paths for TT2 save file
-			const tt2Path =
-				'file:///sdcard/Android/data/com.gamehive.taptitans2/files/ISaveableModel.json'
-
-			const fileInfo = await FileSystem.getInfoAsync(tt2Path)
-
-			if (fileInfo.exists) {
-				const content = await FileSystem.readAsStringAsync(tt2Path)
-				importSaveData(content)
-				Alert.alert('Success', 'Save file detected and imported automatically!')
-			} else {
-				Alert.alert(
-					'Not Found',
-					'Could not find TT2 save file automatically. Please use the Manual Import (Clipboard) method or ensure the app has file access permissions.',
-				)
-			}
-		} catch (error) {
-			console.error('Auto-detect error:', error)
-			Alert.alert(
-				'Error',
-				'An error occurred while trying to scan for save files.',
-			)
-		} finally {
-			setIsImporting(false)
-		}
-	}
 
 	const handleImport = async () => {
 		setIsImporting(true)
@@ -105,19 +68,9 @@ export const DashboardScreen = () => {
 						<Text className="text-indigo-400 font-bold text-center mb-4">
 							Connect your game account to sync your progress.
 						</Text>
-						{Platform.OS === 'android' && (
-							<Button
-								onPress={handleAutoDetect}
-								className="bg-indigo-600 mb-3"
-								disabled={isImporting}
-							>
-								Auto-Scan (Android)
-							</Button>
-						)}
 						<Button
 							onPress={handleImport}
-							variant="outline"
-							className="border-indigo-500/50"
+							className="bg-indigo-600"
 							disabled={isImporting}
 						>
 							Import from Clipboard
@@ -179,28 +132,6 @@ export const DashboardScreen = () => {
 							</View>
 							<Text className="text-slate-600">›</Text>
 						</TouchableOpacity>
-
-						{Platform.OS === 'android' && (
-							<TouchableOpacity
-								className="bg-slate-900 dark:bg-slate-900 light:bg-slate-100 border border-slate-800 dark:border-slate-800 light:border-slate-200 rounded-3xl p-5 mb-4 flex-row items-center justify-between"
-								onPress={handleAutoDetect}
-							>
-								<View className="flex-row items-center">
-									<View className="bg-indigo-500/20 p-2.5 rounded-xl mr-4">
-										<Text>📂</Text>
-									</View>
-									<View>
-										<Text className="text-white dark:text-white light:text-slate-900 font-bold">
-											Auto-Scan File
-										</Text>
-										<Text className="text-slate-500 text-xs">
-											Detect Android savefile
-										</Text>
-									</View>
-								</View>
-								<Text className="text-slate-600">›</Text>
-							</TouchableOpacity>
-						)}
 					</>
 				)}
 			</ScrollView>
